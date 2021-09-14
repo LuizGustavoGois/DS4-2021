@@ -39,6 +39,8 @@ build/Release
 
 # Dependency directories
 node_modules/
+./revisao-ds3/node_modules/
+./web-project/server/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
