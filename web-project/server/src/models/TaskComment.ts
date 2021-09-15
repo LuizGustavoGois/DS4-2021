@@ -9,6 +9,8 @@ export class TaskComment {
     @PrimaryGeneratedColumn()
     id: number;
 
+
+    
     @ManyToOne(()  => User, {nullable: false})
     @JoinColumn({name: 'user_id'})
     user: User;
