@@ -2,6 +2,11 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../models/User';
 import { sign } from 'jsonwebtoken';
+
+
+require('dotenv').config();
+
+
 class AuthController {
 
     public async create(request: Request, response: Response) {
@@ -21,7 +26,7 @@ class AuthController {
             return response.status(201).json (created);
            
         } catch (error) {
-            return response.status(error.code).json({message: error.message});
+            return response.json(error);
         }
     }
 
@@ -50,7 +55,8 @@ class AuthController {
 
             //To-do Se usuario e senha corretor "devolver um token"  (JWT)
             const payload = {user: foundUser};
-            const token = sign(payload, 'materdei', {
+            const cryptoKey = process.env.CRYPTO_KEY as string;
+            const token = sign(payload, cryptoKey, {
                 expiresIn: '1h'
             })
 
@@ -58,7 +64,7 @@ class AuthController {
 
              
         } catch (error) {
-            response.status(error.code).json({message: error.message});
+            return response.json(error);
             
         }
     }

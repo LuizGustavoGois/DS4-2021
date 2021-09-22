@@ -4,9 +4,9 @@ import AuthController from './controllers/AuthController';
 const routes = Router();
 
 //AUTH
-routes.use('/auth')
-    .post('/signup', AuthController.create)
-    .post('signin', AuthController.validate);
+routes
+    .post('/auth/signup', AuthController.create)
+    .post('/auth/signin', AuthController.validate);
     
 
 
