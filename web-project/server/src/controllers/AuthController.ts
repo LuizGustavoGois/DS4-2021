@@ -2,9 +2,11 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../models/User';
 import { sign } from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 
-require('dotenv').config();
+//Carrega variaveis de ambiente
+dotenv.config();
 
 
 class AuthController {
@@ -53,8 +55,16 @@ class AuthController {
                 return response.status(403).json({message: 'auth-invalid-password'})  
             }
 
-            //To-do Se usuario e senha corretor "devolver um token"  (JWT)
-            const payload = {user: foundUser};
+            //To-do Se usuario e senha corretor "devolver um token"  (JWT) com os dados basicos do usuario
+            const payload = {
+                user: {
+                    id: foundUser.id,
+                    name: foundUser.name,
+                    email: foundUser.email
+                }
+            };
+
+            //Carrega a chave da criptografia e monta o token para ser retornado 
             const cryptoKey = process.env.CRYPTO_KEY as string;
             const token = sign(payload, cryptoKey, {
                 expiresIn: '1h'
